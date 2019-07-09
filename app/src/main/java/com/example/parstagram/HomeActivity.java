@@ -38,7 +38,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private EditText descriptionInput;
-    private Button refreshBtn;
+    private Button logoutBtn;
     private Button createBtn;
     private FloatingActionButton fab;
     private ProgressDialog pd;
@@ -49,48 +49,63 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        descriptionInput = findViewById(R.id.descriptionInput);
-        refreshBtn =  findViewById(R.id.refreshBtn);
-        createBtn = findViewById(R.id.createBtn);
-        fab = findViewById(R.id.fab);
+        // Check if user is already logged in
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if(currentUser ==  null){ // User is not logged in -- Redirect to LoginActivity
+            final Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            setContentView(R.layout.activity_home);
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onLaunchCamera(view);
-            }
-        });
+            descriptionInput = findViewById(R.id.descriptionInput);
+            logoutBtn =  findViewById(R.id.logoutBtn);
+            createBtn = findViewById(R.id.createBtn);
+            fab = findViewById(R.id.fab);
 
-        refreshBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadTopPosts();
-            }
-        });
 
-        createBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String description = descriptionInput.getText().toString();
-                final ParseUser user = ParseUser.getCurrentUser();
-                final ParseFile file = new ParseFile(photoFile);
-                createPost(description, file, user);
+            // Set Click listeners
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onLaunchCamera(view);
+                }
+            });
 
-            }
-        });
+            logoutBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    logoutUser();
+                }
+            });
 
-        pd = new ProgressDialog(this);
-        pd.setTitle("Loading...");
-        pd.setMessage("Please wait.");
-        pd.setCancelable(false);
+            createBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final String description = descriptionInput.getText().toString();
+                    final ParseUser user = ParseUser.getCurrentUser();
+                    final ParseFile file = new ParseFile(photoFile);
+                    createPost(description, file, user);
 
-        loadTopPosts();
+                }
+            });
+
+            // Initialize Progress Dialog
+            pd = new ProgressDialog(this);
+            pd.setTitle("Loading...");
+            pd.setMessage("Please wait.");
+            pd.setCancelable(false);
+
+            // Load timeline
+            loadTopPosts();
+        }
+
     }
 
+    // Creates a new post in Parse
     private void createPost(String description, ParseFile image, ParseUser user){
         pd.show();
         final Post newPost = new Post();
@@ -113,6 +128,8 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+
+    // Loads timeline -- Top 20 posts
     private void loadTopPosts(){
 
         pd.show();
@@ -235,6 +252,14 @@ public class HomeActivity extends AppCompatActivity {
         Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
         // Return result
         return rotatedBitmap;
+    }
+
+    // Logs out the current user
+    private void logoutUser(){
+        ParseUser.logOut();
+        final Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

@@ -37,13 +37,13 @@
         app:layout_constraintTop_toBottomOf="@+id/descriptionInput" />
 
     <Button
-        android:id="@+id/refreshBtn"
+        android:id="@+id/logoutBtn"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginStart="55dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="56dp"
-        android:text="Refresh"
+        android:text="Logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
