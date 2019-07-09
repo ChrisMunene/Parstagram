@@ -103,6 +103,7 @@ public class HomeActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if(e == null){
                     Log.d("HomeActivity", "Post Created Successfully");
+                    Toast.makeText(HomeActivity.this, "Posted Successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     e.printStackTrace();
                 }

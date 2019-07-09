@@ -14,21 +14,23 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameInput;
     private EditText passwordInput;
     private Button loginBtn;
+    private Button signupBtn;
     private ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
-        usernameInput = findViewById(R.id.usernameInput);
+        usernameInput = findViewById(R.id.userNameInput);
         passwordInput = findViewById(R.id.passwordInput);
         loginBtn = findViewById(R.id.loginBtn);
+        signupBtn = findViewById(R.id.signupBtn);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        // Initialize progress dialog
         pd = new ProgressDialog(this);
         pd.setTitle("Loading...");
         pd.setMessage("Please wait.");
@@ -48,14 +60,17 @@ public class MainActivity extends AppCompatActivity {
 
     // Handle asynchronous login to parse server
     private void login(String username, String password){
+        // Show progress dialog
         pd.show();
+
+        // Invoke background login
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                //on success
+                //on success -- Redirect to HomeActivity
                 if(e == null){
                     Log.d("LoginActivity", "Login Successful");
-                    final Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
 
@@ -65,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                // Dismiss progress dialog
                 pd.dismiss();
             }
         });
