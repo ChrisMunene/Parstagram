@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.parstagram.R;
 import com.example.parstagram.model.Post;
 import com.parse.ParseFile;
@@ -54,8 +55,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         private TextView tvUsername;
         private TextView tvDescription;
         private TextView tvUsername2;
-        private ImageView ivPostImage;
         private TextView tvTimestamp;
+        private ImageView ivPostImage;
+        private ImageView ivProfileImg;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,8 +66,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             tvUsername2 = itemView.findViewById(R.id.tvUsername2);
             ivPostImage = itemView.findViewById(R.id.ivPostImage);
             tvTimestamp = itemView.findViewById(R.id.tvTimetamp);
+            ivProfileImg = itemView.findViewById(R.id.ivProfileImg);
         }
 
+        // Binds data to the view
         public void bind(Post post){
             tvUsername.setText(post.getUser().getUsername());
             tvUsername2.setText(post.getUser().getUsername());
@@ -73,8 +77,20 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             String timestamp = getRelativeTimestamp(post.getCreatedAt().toString());
             tvTimestamp.setText(timestamp);
             ParseFile image = post.getImage();
+            ParseFile profileImage = post.getProfileImage();
+
+            // Show post image
             if(image != null){
                 Glide.with(context).load(image.getUrl()).into(ivPostImage);
+            }
+
+            // Show rounded profile image
+            if(profileImage != null){
+                RequestOptions options = new RequestOptions()
+                        .override(30, 30)
+                        .centerCrop()
+                        .circleCropTransform();
+                Glide.with(context).load(profileImage.getUrl()).apply(options).into(ivProfileImg);
             }
         }
     }

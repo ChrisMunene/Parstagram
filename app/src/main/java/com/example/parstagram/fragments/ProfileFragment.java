@@ -24,44 +24,43 @@ import com.parse.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
-
+public class ProfileFragment extends Fragment {
     private RecyclerView rvPosts;
-    protected PostsAdapter adapter;
-    protected List<Post> mPosts;
-    protected ProgressDialog pd;
-    protected SwipeRefreshLayout swipeContainer;
-    protected EndlessRecyclerViewScrollListener scrollListener;
-    protected Boolean isRefreshing = false;
+    private PostsAdapter adapter;
+    private List<Post> mPosts;
+    private ProgressDialog pd;
+    private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
+    private Boolean isRefreshing = false;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvPosts = view.findViewById(R.id.rvPosts);
-        swipeContainer = view.findViewById(R.id.swipeContainer);
-
-        // Setup refresh listener which triggers new data loading
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                isRefreshing = true;
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-                loadPosts(0);
-            }
-        });
-        // Configure the refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
+//        swipeContainer = view.findViewById(R.id.swipeContainer);
+//
+//        // Setup refresh listener which triggers new data loading
+//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                isRefreshing = true;
+//                // Your code to refresh the list here.
+//                // Make sure you call swipeContainer.setRefreshing(false)
+//                // once the network request has completed successfully.
+//                loadPosts(0);
+//            }
+//        });
+//        // Configure the refreshing colors
+//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light);
 
         // Create data source
         mPosts = new ArrayList<>();
@@ -98,7 +97,7 @@ public class HomeFragment extends Fragment {
     }
 
     // Loads timeline -- Top 20 posts
-    protected void loadPosts(int page){
+    private void loadPosts(int page){
 
         Log.d("CreatePostActivity", String.format("Page: %s", page));
 
@@ -122,10 +121,10 @@ public class HomeFragment extends Fragment {
 
                     //Success
                     for(int i = 0; i < posts.size(); i++){
-                        Log.d("CreatePostActivity", String.format("Post [%s] Username: %s Description: %s", i,
-                                posts.get(i).getUser().getUsername(),
-                                posts.get(i).getDescription()));
+                        Log.d("CreatePostActivity", String.format("Post [%s] Username: %s Description: %s Date: %s", i, posts.get(i).getUser().getUsername(), posts.get(i).getDescription(),
+                                posts.get(i).getCreatedAt()));
                     }
+
                     mPosts.addAll(posts);
                     adapter.notifyDataSetChanged();
                 } else {
@@ -145,6 +144,4 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-
 }

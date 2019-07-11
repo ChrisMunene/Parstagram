@@ -12,6 +12,7 @@ public class Post extends ParseObject {
     private static final String KEY_IMAGE = "image";
     private static final String KEY_USER = "user";
     private static final String KEY_CREATED_AT = "createdAt";
+    private static final String KEY_PROFILE_IMAGE = "profileImage";
     private static final int PAGE_SIZE = 10;
 
     public String getDescription(){
@@ -37,6 +38,8 @@ public class Post extends ParseObject {
     public void setUser(ParseUser user){
         put(KEY_USER, user);
     }
+
+    public ParseFile getProfileImage() {return getUser().getParseFile(KEY_PROFILE_IMAGE);}
 
     public static class Query extends ParseQuery<Post>{
         public Query(){
@@ -65,6 +68,11 @@ public class Post extends ParseObject {
 
         public Query paginate(int page){
             setSkip(page * PAGE_SIZE);
+            return this;
+        }
+
+        public Query forCurrentUser(){
+            whereEqualTo(KEY_USER, ParseUser.getCurrentUser());
             return this;
         }
     }

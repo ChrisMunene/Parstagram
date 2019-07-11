@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.parstagram.fragments.ComposeFragment;
 import com.example.parstagram.fragments.HomeFragment;
+import com.example.parstagram.fragments.ProfileDetailsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new ComposeFragment();
                     break;
                 case R.id.navigation_notifications:
-                    fragment = new ComposeFragment();
+                    fragment = new ProfileDetailsFragment();
                     break;
                 default:
                     fragment = new ComposeFragment();
