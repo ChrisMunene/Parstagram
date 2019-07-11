@@ -33,6 +33,7 @@
                 android:id="@+id/imageView10"
                 android:layout_width="74dp"
                 android:layout_height="56dp"
+                android:tint="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/camera_shadow_fill" />

@@ -61,52 +61,44 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Check if user is already logged in
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if(currentUser ==  null){ // User is not logged in -- Redirect to LoginActivity
-            final Intent intent = new Intent(getContext(), LoginActivity.class);
-            startActivity(intent);
-        } else {
-            descriptionInput = view.findViewById(R.id.descriptionInput);
-            logoutBtn =  view.findViewById(R.id.logoutBtn);
-            createBtn = view.findViewById(R.id.createBtn);
-            fab = view.findViewById(R.id.fab);
-            ivPreview = view.findViewById(R.id.ivPreview);
+        descriptionInput = view.findViewById(R.id.descriptionInput);
+        logoutBtn =  view.findViewById(R.id.logoutBtn);
+        createBtn = view.findViewById(R.id.createBtn);
+        fab = view.findViewById(R.id.fab);
+        ivPreview = view.findViewById(R.id.ivPreview);
 
 
-            // Set Click listeners
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onLaunchCamera(view);
-                }
-            });
+        // Set Click listeners
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onLaunchCamera(view);
+            }
+        });
 
-            logoutBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    logoutUser();
-                }
-            });
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutUser();
+            }
+        });
 
-            createBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final String description = descriptionInput.getText().toString();
-                    final ParseUser user = ParseUser.getCurrentUser();
-                    final ParseFile file = new ParseFile(photoFile);
-                    createPost(description, file, user);
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String description = descriptionInput.getText().toString();
+                final ParseUser user = ParseUser.getCurrentUser();
+                final ParseFile file = new ParseFile(photoFile);
+                createPost(description, file, user);
 
-                }
-            });
+            }
+        });
 
-            // Initialize Progress Dialog
-            pd = new ProgressDialog(getContext());
-            pd.setTitle("Loading...");
-            pd.setMessage("Please wait.");
-            pd.setCancelable(false);
-
-        }
+        // Initialize Progress Dialog
+        pd = new ProgressDialog(getContext());
+        pd.setTitle("Loading...");
+        pd.setMessage("Please wait.");
+        pd.setCancelable(false);
 
     }
 

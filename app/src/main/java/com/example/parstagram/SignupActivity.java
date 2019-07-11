@@ -9,8 +9,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.parstagram.model.User;
 import com.parse.ParseException;
-import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class SignupActivity extends AppCompatActivity {
@@ -21,6 +21,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText passwordInput;
     private EditText confirmPasswordInput;
     private Button signupBtn;
+    private Button loginBtn;
     private ProgressDialog pd;
 
     @Override
@@ -34,6 +35,7 @@ public class SignupActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.passwordInput);
         confirmPasswordInput = findViewById(R.id.confirmPasswordInput);
         signupBtn = findViewById(R.id.signupBtn);
+        loginBtn = findViewById(R.id.loginBtn);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +58,15 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         // Initialize progress dialog
         pd = new ProgressDialog(this);
         pd.setTitle("Loading...");
@@ -67,13 +78,13 @@ public class SignupActivity extends AppCompatActivity {
         // Show progress dialog
         pd.show();
         // Create the ParseUser
-        ParseUser user = new ParseUser();
+        User user = new User();
         // Set core properties
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
         // Set custom properties
-        user.put("fullname", fullname);
+        user.setFullName(fullname);
         // Invoke signUpInBackground
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
