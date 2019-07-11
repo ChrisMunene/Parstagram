@@ -35,13 +35,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class CreatePostActivity extends AppCompatActivity {
 
     private EditText descriptionInput;
     private Button logoutBtn;
     private Button createBtn;
     private FloatingActionButton fab;
     private ProgressDialog pd;
+    private ImageView ivPreview;
     public final String APP_TAG = "Parstagram";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     File photoFile;
@@ -57,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            setContentView(R.layout.activity_home);
+            setContentView(R.layout.activity_create_post);
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
@@ -117,12 +118,17 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if(e == null){
-                    Log.d("HomeActivity", "Post Created Successfully");
-                    Toast.makeText(HomeActivity.this, "Posted Successfully!", Toast.LENGTH_SHORT).show();
+                    Log.d("CreatePostActivity", "Post Created Successfully");
+                    Toast.makeText(CreatePostActivity.this, "Posted Successfully!", Toast.LENGTH_SHORT).show();
                 } else {
                     e.printStackTrace();
                 }
 
+                //Reset input form
+                descriptionInput.setText("");
+                ivPreview.setImageResource(0);
+
+                // Dismiss progress dialog
                 pd.dismiss();
             }
         });
@@ -146,13 +152,14 @@ public class HomeActivity extends AppCompatActivity {
                 if(e == null){
                     //Success
                     for(int i = 0; i < posts.size(); i++){
-                        Log.d("HomeActivity", String.format("Post [%s] Username: %s Description: %s", i, posts.get(i).getUser().getUsername(), posts.get(i).getDescription()));
+                        Log.d("CreatePostActivity", String.format("Post [%s] Username: %s Description: %s", i, posts.get(i).getUser().getUsername(), posts.get(i).getDescription()));
                     }
                 } else {
                     //error
                     e.printStackTrace();
                 }
 
+                // Dismiss progress dialog
                 pd.dismiss();
             }
         });
@@ -168,7 +175,7 @@ public class HomeActivity extends AppCompatActivity {
         // wrap File object into a content provider
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(HomeActivity.this, "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(CreatePostActivity.this, "com.codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
@@ -216,7 +223,7 @@ public class HomeActivity extends AppCompatActivity {
                 // RESIZE BITMAP, see section below
 
                 // Load the taken image into a preview
-                ImageView ivPreview = (ImageView) findViewById(R.id.ivPreview);
+                ivPreview = findViewById(R.id.ivPreview);
                 ivPreview.setImageBitmap(rotatedImage);
 
             } else { // Result was a failure

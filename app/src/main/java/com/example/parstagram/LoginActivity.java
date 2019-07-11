@@ -67,10 +67,10 @@ public class LoginActivity extends AppCompatActivity {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                //on success -- Redirect to HomeActivity
+                //on success -- Redirect to CreatePostActivity
                 if(e == null){
                     Log.d("LoginActivity", "Login Successful");
-                    final Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
 

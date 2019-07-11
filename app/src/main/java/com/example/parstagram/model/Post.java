@@ -11,6 +11,8 @@ public class Post extends ParseObject {
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_IMAGE = "image";
     private static final String KEY_USER = "user";
+    private static final String KEY_CREATED_AT = "createdAt";
+    private static final int PAGE_SIZE = 10;
 
     public String getDescription(){
         return getString(KEY_DESCRIPTION);
@@ -42,12 +44,27 @@ public class Post extends ParseObject {
         }
 
         public Query getTop(){
-            setLimit(20);
+            setLimit(PAGE_SIZE);
             return this;
         }
 
         public Query withUser(){
-            include("user");
+            include(KEY_USER);
+            return this;
+        }
+
+        public Query ascending(){
+            orderByAscending(KEY_CREATED_AT);
+            return this;
+        }
+
+        public Query descending(){
+            orderByDescending(KEY_CREATED_AT);
+            return this;
+        }
+
+        public Query paginate(int page){
+            setSkip(page * PAGE_SIZE);
             return this;
         }
     }

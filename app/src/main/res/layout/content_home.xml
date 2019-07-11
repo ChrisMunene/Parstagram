@@ -5,21 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".HomeActivity"
-    tools:showIn="@layout/activity_home">
+    tools:context=".CreatePostActivity"
+    tools:showIn="@layout/activity_create_post">
 
     <EditText
         android:id="@+id/descriptionInput"
-        android:layout_width="303dp"
-        android:layout_height="55dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="56dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="Add a Caption..."
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivPreview" />
 
@@ -51,11 +51,11 @@
 
     <ImageView
         android:id="@+id/ivPreview"
-        android:layout_width="291dp"
-        android:layout_height="362dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="55dp"
+        android:layout_width="408dp"
+        android:layout_height="382dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
