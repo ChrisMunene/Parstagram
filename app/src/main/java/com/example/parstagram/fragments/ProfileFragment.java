@@ -1,11 +1,13 @@
 package com.example.parstagram.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.parstagram.EndlessRecyclerViewScrollListener;
+import com.example.parstagram.LoginActivity;
 import com.example.parstagram.R;
 import com.example.parstagram.adapters.ProfileAdapter;
 import com.example.parstagram.model.Post;
@@ -26,6 +29,7 @@ import com.example.parstagram.model.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +48,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvFollowersCount;
     private TextView tvFollowingCount;
     private ImageView ivProfileImage;
+    private Button logoutBtn;
 
     @Nullable
     @Override
@@ -61,6 +66,14 @@ public class ProfileFragment extends Fragment {
         tvFollowersCount = view.findViewById(R.id.tvFollowersCount);
         tvFollowingCount = view.findViewById(R.id.tvFollowingCount);
         ivProfileImage = view.findViewById(R.id.ivProfileImage);
+        logoutBtn = view.findViewById(R.id.logoutBtn);
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutUser();
+            }
+        });
 //        swipeContainer = view.findViewById(R.id.swipeContainer);
 //
 //        // Setup refresh listener which triggers new data loading
@@ -183,5 +196,13 @@ public class ProfileFragment extends Fragment {
                     .circleCropTransform();
             Glide.with(getContext()).load(profileImage.getUrl()).apply(options).into(ivProfileImage);
         }
+    }
+
+    // Logs out the current user
+    private void logoutUser(){
+        ParseUser.logOut();
+        final Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

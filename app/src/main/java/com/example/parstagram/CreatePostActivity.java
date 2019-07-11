@@ -38,7 +38,6 @@ import java.util.List;
 public class CreatePostActivity extends AppCompatActivity {
 
     private EditText descriptionInput;
-    private Button logoutBtn;
     private Button createBtn;
     private FloatingActionButton fab;
     private ProgressDialog pd;
@@ -63,7 +62,6 @@ public class CreatePostActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
 
             descriptionInput = findViewById(R.id.descriptionInput);
-            logoutBtn =  findViewById(R.id.logoutBtn);
             createBtn = findViewById(R.id.createBtn);
             fab = findViewById(R.id.fab);
 
@@ -73,13 +71,6 @@ public class CreatePostActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     onLaunchCamera(view);
-                }
-            });
-
-            logoutBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    logoutUser();
                 }
             });
 
@@ -259,14 +250,6 @@ public class CreatePostActivity extends AppCompatActivity {
         Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
         // Return result
         return rotatedBitmap;
-    }
-
-    // Logs out the current user
-    private void logoutUser(){
-        ParseUser.logOut();
-        final Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 
 }

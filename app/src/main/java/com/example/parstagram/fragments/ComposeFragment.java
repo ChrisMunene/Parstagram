@@ -24,7 +24,6 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
-import com.example.parstagram.LoginActivity;
 import com.example.parstagram.R;
 import com.example.parstagram.model.Post;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -43,7 +42,6 @@ import static android.app.Activity.RESULT_OK;
 public class ComposeFragment extends Fragment {
 
     private EditText descriptionInput;
-    private Button logoutBtn;
     private Button createBtn;
     private FloatingActionButton fab;
     private ProgressDialog pd;
@@ -62,7 +60,6 @@ public class ComposeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         descriptionInput = view.findViewById(R.id.descriptionInput);
-        logoutBtn =  view.findViewById(R.id.logoutBtn);
         createBtn = view.findViewById(R.id.createBtn);
         fab = view.findViewById(R.id.fab);
         ivPreview = view.findViewById(R.id.ivPreview);
@@ -73,13 +70,6 @@ public class ComposeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 onLaunchCamera(view);
-            }
-        });
-
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logoutUser();
             }
         });
 
@@ -226,10 +216,4 @@ public class ComposeFragment extends Fragment {
         return rotatedBitmap;
     }
 
-    // Logs out the current user
-    private void logoutUser(){
-        ParseUser.logOut();
-        final Intent intent = new Intent(getContext(), LoginActivity.class);
-        startActivity(intent);
-    }
 }
