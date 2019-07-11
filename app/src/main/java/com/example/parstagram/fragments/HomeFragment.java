@@ -122,7 +122,8 @@ public class HomeFragment extends Fragment {
 
                     //Success
                     for(int i = 0; i < posts.size(); i++){
-                        Log.d("CreatePostActivity", String.format("Post [%s] Username: %s Description: %s", i, posts.get(i).getUser().getUsername(), posts.get(i).getDescription()));
+                        Log.d("CreatePostActivity", String.format("Post [%s] Username: %s Description: %s Date: %s", i, posts.get(i).getUser().getUsername(), posts.get(i).getDescription(),
+                                posts.get(i).getCreatedAt()));
                     }
 
                     mPosts.addAll(posts);
@@ -140,6 +141,7 @@ public class HomeFragment extends Fragment {
                     swipeContainer.setRefreshing(false);
                     isRefreshing = false;
                 }
+
             }
         });
     }
