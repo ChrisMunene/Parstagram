@@ -13,6 +13,7 @@ public class Post extends ParseObject {
     private static final String KEY_USER = "user";
     private static final String KEY_CREATED_AT = "createdAt";
     private static final String KEY_PROFILE_IMAGE = "profileImage";
+    private static final String KEY_LIKES = "likes";
     private static final int PAGE_SIZE = 20;
 
     public String getDescription(){
@@ -40,6 +41,8 @@ public class Post extends ParseObject {
     }
 
     public ParseFile getProfileImage() {return getUser().getParseFile(KEY_PROFILE_IMAGE);}
+
+    public void likePost(ParseUser user){put(KEY_LIKES, user);}
 
     public static class Query extends ParseQuery<Post>{
         public Query(){

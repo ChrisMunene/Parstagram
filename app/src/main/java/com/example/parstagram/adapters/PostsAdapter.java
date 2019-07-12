@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,6 +63,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         private TextView tvTimestamp;
         private ImageView ivPostImage;
         private ImageView ivProfileImg;
+        private ImageView likeBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,6 +73,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
             ivPostImage = itemView.findViewById(R.id.ivPostImage);
             tvTimestamp = itemView.findViewById(R.id.tvTimetamp);
             ivProfileImg = itemView.findViewById(R.id.ivProfileImg);
+            likeBtn = itemView.findViewById(R.id.likeBtn);
         }
 
         // Binds data to the view
@@ -85,7 +89,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
             // Show post image
             if(image != null){
-                Glide.with(context).load(image.getUrl()).into(ivPostImage);
+                RequestOptions options = new RequestOptions()
+                        .override(ivPostImage.getWidth(), ivPostImage.getHeight())
+                        .centerCrop();
+                Glide.with(context).load(image.getUrl()).apply(options).into(ivPostImage);
             }
 
             // Show rounded profile image
@@ -99,6 +106,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
                 Glide.with(context).load(profileImage.getUrl()).apply(options).into(ivProfileImg);
             }
 
+            likeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    likeBtn.setImageResource(R.drawable.ufi_heart_active);
+                    DrawableCompat.setTint(
+                            DrawableCompat.wrap(likeBtn.getDrawable()),
+                            ContextCompat.getColor(context, R.color.colorAccent)
+                    );
+                }
+            });
 
         }
     }

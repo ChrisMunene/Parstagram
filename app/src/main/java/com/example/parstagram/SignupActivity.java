@@ -90,7 +90,7 @@ public class SignupActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     // Success -- Redirect to home activity
-                    final Intent intent = new Intent(SignupActivity.this, CreatePostActivity.class);
+                    final Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else {

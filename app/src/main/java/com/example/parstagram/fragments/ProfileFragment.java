@@ -74,24 +74,6 @@ public class ProfileFragment extends Fragment {
                 logoutUser();
             }
         });
-//        swipeContainer = view.findViewById(R.id.swipeContainer);
-//
-//        // Setup refresh listener which triggers new data loading
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                isRefreshing = true;
-//                // Your code to refresh the list here.
-//                // Make sure you call swipeContainer.setRefreshing(false)
-//                // once the network request has completed successfully.
-//                loadPosts(0);
-//            }
-//        });
-//        // Configure the refreshing colors
-//        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-//                android.R.color.holo_green_light,
-//                android.R.color.holo_orange_light,
-//                android.R.color.holo_red_light);
 
         // Create data source
         mPosts = new ArrayList<>();
@@ -102,22 +84,6 @@ public class ProfileFragment extends Fragment {
         // Set LayoutManager on RecyclerView
         GridLayoutManager gridLayoutManager =  new GridLayoutManager(getContext(), 3);
         rvPosts.setLayoutManager(gridLayoutManager);
-//
-//        // Set up scroll listener for endless scrolling
-//        // Retain an instance so that you can call `resetState()` for fresh searches
-//        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-//            @Override
-//            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-//                // Triggered only when new data needs to be appended to the list
-//                //Load the next page
-//                loadPosts(page);
-//            }
-//        };
-//
-//        // Adds the scroll listener to RecyclerView
-//        rvPosts.addOnScrollListener(scrollListener);
-
-
 
         // Initialize Progress Dialog
         pd = new ProgressDialog(getContext());
@@ -170,12 +136,6 @@ public class ProfileFragment extends Fragment {
 
                 // Dismiss progress dialog
                 if(pd.isShowing()) pd.dismiss();
-
-                // Reset swipe container
-//                if(isRefreshing){
-//                    swipeContainer.setRefreshing(false);
-//                    isRefreshing = false;
-//                }
 
             }
         });

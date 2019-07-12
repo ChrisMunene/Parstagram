@@ -23,7 +23,6 @@ import androidx.core.content.FileProvider;
 
 import com.example.parstagram.model.Post;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -33,7 +32,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class CreatePostActivity extends AppCompatActivity {
 
@@ -91,8 +89,6 @@ public class CreatePostActivity extends AppCompatActivity {
             pd.setMessage("Please wait.");
             pd.setCancelable(false);
 
-            // Load timeline
-            loadTopPosts();
         }
 
     }
@@ -111,6 +107,9 @@ public class CreatePostActivity extends AppCompatActivity {
                 if(e == null){
                     Log.d("CreatePostActivity", "Post Created Successfully");
                     Toast.makeText(CreatePostActivity.this, "Posted Successfully!", Toast.LENGTH_SHORT).show();
+
+                    // Dismiss progress dialog
+                    pd.dismiss();
                 } else {
                     e.printStackTrace();
                 }
@@ -119,42 +118,11 @@ public class CreatePostActivity extends AppCompatActivity {
                 descriptionInput.setText("");
                 ivPreview.setImageResource(0);
 
-                // Dismiss progress dialog
-                pd.dismiss();
+
             }
         });
     }
 
-
-    // Loads timeline -- Top 20 posts
-    private void loadTopPosts(){
-
-        pd.show();
-        // Initialize post query
-        final Post.Query postQuery = new Post.Query();
-
-        // Set query parameters -- Get top posts with nested users
-        postQuery.getTop().withUser();
-
-        // Get posts from parse server -- async
-        postQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if(e == null){
-                    //Success
-                    for(int i = 0; i < posts.size(); i++){
-                        Log.d("CreatePostActivity", String.format("Post [%s] Username: %s Description: %s", i, posts.get(i).getUser().getUsername(), posts.get(i).getDescription()));
-                    }
-                } else {
-                    //error
-                    e.printStackTrace();
-                }
-
-                // Dismiss progress dialog
-                pd.dismiss();
-            }
-        });
-    }
 
     // Launch Camera
     public void onLaunchCamera(View view) {

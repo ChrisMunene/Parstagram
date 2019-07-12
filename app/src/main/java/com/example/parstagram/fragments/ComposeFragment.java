@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.parstagram.R;
 import com.example.parstagram.model.Post;
@@ -106,6 +107,13 @@ public class ComposeFragment extends Fragment {
                 if(e == null){
                     Log.d("CreatePostActivity", "Post Created Successfully");
                     Toast.makeText(getContext(), "Posted Successfully!", Toast.LENGTH_SHORT).show();
+                    // Navigate to timeline
+                    Fragment frag = new HomeFragment();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.flContainer, frag);
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    ft.addToBackStack(null);
+                    ft.commit();
                 } else {
                     e.printStackTrace();
                 }
