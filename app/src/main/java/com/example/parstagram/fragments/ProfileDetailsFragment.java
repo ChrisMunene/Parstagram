@@ -9,8 +9,19 @@ import com.parse.ParseException;
 import java.util.List;
 
 public class ProfileDetailsFragment extends HomeFragment {
+
+    // Variable used when a user clicks on a post and we want to scroll to its position on the timeline.
+    private int position;
+
+    public ProfileDetailsFragment(int position) {
+        super();
+        this.position = position;
+    }
+
     @Override
     protected void loadPosts(int page) {
+
+        Log.d("Profile", String.format("Position: %s", position));
 
         // Show progress if this is the initial load
         if(!isRefreshing) pd.show();
@@ -38,6 +49,9 @@ public class ProfileDetailsFragment extends HomeFragment {
 
                     mPosts.addAll(posts);
                     adapter.notifyDataSetChanged();
+
+                    // Scroll to requested position.
+                    rvPosts.scrollToPosition(position);
                 } else {
                     //error
                     e.printStackTrace();

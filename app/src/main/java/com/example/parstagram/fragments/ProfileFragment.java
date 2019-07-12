@@ -96,7 +96,7 @@ public class ProfileFragment extends Fragment {
         // Create data source
         mPosts = new ArrayList<>();
         // Create adapter
-        adapter = new ProfileAdapter(getContext(), mPosts);
+        adapter = new ProfileAdapter(getContext(), mPosts, getFragmentManager());
         // Set adapter on RecyclerView
         rvPosts.setAdapter(adapter);
         // Set LayoutManager on RecyclerView

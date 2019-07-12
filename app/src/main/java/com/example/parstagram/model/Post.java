@@ -13,7 +13,7 @@ public class Post extends ParseObject {
     private static final String KEY_USER = "user";
     private static final String KEY_CREATED_AT = "createdAt";
     private static final String KEY_PROFILE_IMAGE = "profileImage";
-    private static final int PAGE_SIZE = 10;
+    private static final int PAGE_SIZE = 20;
 
     public String getDescription(){
         return getString(KEY_DESCRIPTION);

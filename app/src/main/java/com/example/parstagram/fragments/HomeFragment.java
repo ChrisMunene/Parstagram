@@ -26,7 +26,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView rvPosts;
+    protected RecyclerView rvPosts;
     protected PostsAdapter adapter;
     protected List<Post> mPosts;
     protected ProgressDialog pd;
@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
         // Create data source
         mPosts = new ArrayList<>();
         // Create adapter
-        adapter = new PostsAdapter(getContext(), mPosts);
+        adapter = new PostsAdapter(getContext(), mPosts, getFragmentManager());
         // Set adapter on RecyclerView
         rvPosts.setAdapter(adapter);
         // Set LayoutManager on RecyclerView

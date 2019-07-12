@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,11 +26,13 @@ import java.util.Locale;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
     private Context context;
+    private FragmentManager fragmentManager;
     private List<Post> posts;
 
-    public PostsAdapter(Context context, List<Post> posts) {
+    public PostsAdapter(Context context, List<Post> posts, FragmentManager fragmentManager) {
         this.context = context;
         this.posts = posts;
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
@@ -42,7 +45,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
-        holder.bind(post);
+        holder.bind(post, position);
     }
 
     @Override
@@ -70,7 +73,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         }
 
         // Binds data to the view
-        public void bind(Post post){
+        public void bind(Post post, int position){
+            final  int pos = position;
             tvUsername.setText(post.getUser().getUsername());
             tvUsername2.setText(post.getUser().getUsername());
             tvDescription.setText(post.getDescription());
@@ -86,12 +90,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
             // Show rounded profile image
             if(profileImage != null){
+
+                // Resize image then round it
                 RequestOptions options = new RequestOptions()
-                        .override(30, 30)
+                        .override(ivProfileImg.getWidth(), ivProfileImg.getHeight())
                         .centerCrop()
                         .circleCropTransform();
                 Glide.with(context).load(profileImage.getUrl()).apply(options).into(ivProfileImg);
             }
+
+
         }
     }
 
