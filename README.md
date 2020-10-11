@@ -2,7 +2,6 @@
 
 **Parstagram** is a Instagram clone using Parse as its backend.
 
-Time spent: **15** hours 
 
 ## Video Walkthrough
 
